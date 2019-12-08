@@ -1,0 +1,69 @@
+---
+
+- name: DNSetup
+  hosts: servers
+  become: yes
+  tasks:
+    - name: install bind package
+      apt:
+        package: bind9
+
+    - name: bind cfg
+      template:
+        src: files/named.conf.options
+        dest: /etc/bind/named.conf.options
+      notify: restart bind
+
+    - name: bind local cfg
+      template:
+        src: files/named.conf.local
+        dest: /etc/bind/named.conf.local
+      notify: 
+        - restart bind
+        - checkconf
+
+    - name: hash db     # file integrity
+      when: dns_role == "master"
+      copy: 
+        content: "{{ dns_records | hash }}"
+        dest: /etc/bind/db.sleep.hash
+      notify:
+        - register timestamp
+        - configure bind
+        - reload db
+
+    - name: hash db ptr
+      when: dns_role == "master"
+      copy:
+        content: "{{ dns_records | hash }}"
+        dest: /etc/bind/db.sleep.ptr.hash
+      notify:
+        - register timestamp
+        - configure bind pointer
+        - reload db
+
+  handlers:
+    - name: register timestamp 
+      shell: date +%s
+      register: ts
+
+    - name: configure bind
+      template:
+        src: files/db.sleep
+        dest: /etc/bind/db.sleep
+
+    - name: configure bind pointer 
+      template:
+        src: files/db.sleep.ptr
+        dest: /etc/bind/db.sleep.ptr
+
+    - name: restart bind
+      service:
+        name: bind9
+        state: restarted
+
+    - name: reload db
+      shell: rndc reload 
+
+    - name: checkconf
+      shell: named-checkconf

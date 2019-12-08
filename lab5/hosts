@@ -1,0 +1,4 @@
+[servers]
+server1 ansible_host=192.168.56.5 ansible_user=user
+
+server2 ansible_host=192.168.56.6 ansible_user=user

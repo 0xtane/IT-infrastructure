@@ -1,0 +1,73 @@
+---
+- name: part1
+  hosts: server1
+  become: yes
+  tasks:
+  - name: Install apache2
+    package:
+      name: apache2
+      state: present
+
+  - name: Apache config 1 
+    template:
+      src: ./files/wordpress.conf
+      dest: /etc/apache2/sites-enabled/wordpress.conf
+
+  - name: Apache config 2 
+    template:
+      src: ./files/000-default.conf
+      dest: /etc/apache2/sites-enabled/000-default.conf
+
+  - name: Install PHP
+    package:
+      name: php
+      state: present
+
+  - name: Install wordpress
+    package:
+      name: wordpress
+      state: present
+
+  - name: wordpress config 
+    template:
+      src: ./files/config-localhost.php
+      dest: /etc/wordpress/config-168.56.5.php
+
+  - name: reload apache
+    service:
+      name: apache2
+      state: reloaded
+
+
+
+- name: part2
+  hosts: server2
+  become: yes
+  tasks:
+  - name: Install MySQL
+    package:
+      name: mysql-server
+      state: present
+
+  - name: Mysql conf 
+    template:
+      src: ./files/mysqld.cnf
+      dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+
+  - name: Add DB file
+    template:
+      src: ./files/database.sql
+      dest: /tmp/database.sql
+
+  - name: Create DB & User 
+    shell: mysql --defaults-file=/etc/mysql/debian.cnf < /tmp/database.sql
+
+  - name: reload mysql
+    service:
+      name: mysql
+      state: restarted
+
+  - name: Remove file
+    file:
+      path: /tmp/database.sql
+      state: absent
