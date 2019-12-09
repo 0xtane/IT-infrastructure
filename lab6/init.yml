@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: ssh keys
+    authorized_key:
+      user: user
+      key: https://github.com/saudzi.keys
+
+  - name: sudo nopass
+    copy:
+      dest: /etc/sudoers.d/user
+      content: "user	ALL = NOPASSWD: ALL"

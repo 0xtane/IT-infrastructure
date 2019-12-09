@@ -1,0 +1,5 @@
+0 2 * * 0	{{ user }}	duplicity --no-encryption full /etc/bind rsync://{{ backup_server }}//srv/backup/DNS_master.b/
+
+0 3 * * *	{{ user }}	duplicity --no-encryption incremental /etc/bind rsync://{{ backup_server }}//srv/backup/DNS_master.b/
+
+

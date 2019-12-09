@@ -1,0 +1,6 @@
+0 21 * * *	{{ user }}	mysqldump dbylib -u saba > /home/{{ user }}/mysqldump
+
+0 22 * * 0	{{ user }}	duplicity --no-encryption full /home/{{ user }}/mysqldump rsync://localhost//srv/backup/mysql_db.b/
+
+0 23 * * *	{{ user }}	duplicity --no-encryption incremental /home/{{ user }}/mysqldump rsync://localhost//srv/backup/mysql_db.b/
+

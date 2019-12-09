@@ -1,0 +1,42 @@
+---
+- name: agent 007 Beckap #1
+  hosts: server1
+  become: yes
+  tasks:
+    - name: create user
+      user:
+        name: "{{ user }}"
+        password: "{{ 'backup' | password_hash('sha512', 'A512')}}"
+        state: present
+        groups: bind
+        append: yes
+        shell: /bin/bash
+
+    - name: mk .ssh dir
+      file:
+        path: /home/{{ user }}/.ssh
+        state: directory
+        owner: "{{ user }}"
+
+
+    - name:  rsa
+      template:
+        src: ./files/rsa2
+        dest: /home/{{ user }}/.ssh/id_rsa
+
+    - name: rsa.pub
+      template:
+        src: ./files/rsa2.pub
+        dest: /home/{{ user }}/.ssh/id_rsa.pub
+
+
+    - name: ssh fingerprint 
+      shell: ssh-keyscan -H {{ backup_server }} >> /home/{{ user }}/.ssh/known_hosts
+
+
+    - name: install dupli-city
+      package:
+        name: duplicity
+        state: present
+
+

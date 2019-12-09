@@ -1,0 +1,21 @@
+backup SLA			bind master				bind slave			mysql
+
+- Coverage			/etc/bind containging dns db;		same here;			mysql db
+
+
+- RPO				acceptable data loss is the amount that will not hinder the function of the recovered service;
+
+
+- Versioning			full each week, incr each day;
+
+
+- Retention			kept for 1 month;
+
+
+- Usability			recovery verified when service is back to functional state with data intact;
+
+
+- Restoration criteria		when the data stored is compromised or erased;
+
+
+- RTO				depends on the size of the db; however, it's just 1 command;

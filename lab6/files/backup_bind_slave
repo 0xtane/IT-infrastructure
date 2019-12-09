@@ -1,0 +1,6 @@
+0 2 * * 0	{{ user }}	duplicity --no-encryption full /etc/bind rsync://localhost//srv/backup/DNS_slave.b/
+0 2 * * 0	{{ user }}	duplicity --no-encryption full /lib/var/bind rsync://localhost//srv/backup/DNS_slave.b/
+
+0 3 * * *	{{ user }}	duplicity --no-encryption incremental /etc/bind rsync://localhost//srv/backup/DNS_slave.b/
+0 3 * * *	{{ user }}	duplicity --no-encryption incremental /lib/var/bind rsync://localhost//srv/backup/DNS_slave.b/
+

@@ -1,0 +1,10 @@
+-all backups are done by user FrontDown.
+
+- can be restored with command: 
+	duplicity --no-encryption restore rsync://{{backup-server}}//srv/backup/{{needed_dir}} /etc/bind			for bind master
+
+	duplicity --no-encryption restore rsync://{{backup-server}}//srv/backup/{{needed_dir}} /etc/bind			for bind slave
+	duplicity --no-encryption restore rsync://{{backup-server}}//srv/backup/{{needed_dir}} /lib/var/bind			for bind slave
+
+	duplicity --no-encryption restore rsync://{{backup-server}}//srv/backup/{{needed_dir}} /home/FrontDown/file.sql		for mysql
+	mysql lab4db < /home/FrontDOwn/filename.sql										for mysql

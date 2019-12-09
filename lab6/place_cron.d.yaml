@@ -1,0 +1,27 @@
+---
+
+- name: bakupsrv1 
+  hosts: server1
+  become: yes
+  tasks:
+    - name: bind master
+      template:
+        src: ./files/backup_bind_master
+        dest: /etc/cron.d/backup_bind_master
+
+
+
+
+- name: bakupsrv1
+  hosts: server2
+  become: yes
+  tasks:
+    - name: bind slave
+      template:
+        src: ./files/backup_bind_slave
+        dest: /etc/cron.d/backup_bind_slave
+
+    - name: place mysql_db
+      template:
+        src: ./files/backup_mysql
+        dest: /etc/cron.d/

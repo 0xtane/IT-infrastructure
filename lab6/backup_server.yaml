@@ -1,0 +1,81 @@
+---
+
+- name: backup  server on #2
+  hosts: server2
+  become: yes
+  tasks:
+    - name: create user
+      user:
+        name: "{{ user }}"
+        password: "{{ 'backup' | password_hash('sha512', 'A512')}}"
+        state: present
+        groups: bind
+        append: yes
+        shell: /bin/bash
+
+
+    - name: mk .ssh dir
+      file:
+        path: /home/{{ user }}/.ssh
+        state: directory
+        owner: "{{ user }}"
+
+    - name: mk known_hosts
+      file:
+        path: /home/{{ user }}/.ssh/known_hosts
+        state: touch
+        owner: "{{ user }}"
+
+    - name: temp rsa3
+      template:
+        src: ./files/rsa1
+        dest: /home/{{ user }}/.ssh/id_rsa
+
+
+    - name: temp rsa3pub
+      template:
+        src: ./files/rsa1.pub
+        dest: /home/{{ user }}/.ssh/id_rsa.pub
+
+    - name: local sshkeys
+      authorized_key:
+        user: "{{ user }}"
+        key: "{{ lookup('file', './files/rsa1.pub') }}"
+
+
+    - name: sshkeys
+      authorized_key:
+        user: "{{ user }}"
+        key: "{{ lookup('file', './files/rsa2.pub') }}"
+
+    - name: ssh fingerprint 
+      shell: ssh-keyscan -H localhost >> /home/{{ user }}/.ssh/known_hosts
+
+    - name: mk backup dir
+      file:
+        path: /srv/backup
+        state: directory
+        owner: "{{ user }}"
+
+    - name: mk mysql_db.b
+      file:
+        path: /srv/backup/mysql_db.b
+        state: directory
+        owner: "{{ user }}"
+
+    - name: mk DNS_master.b
+      file:
+        path: /srv/backup/DNS_master.b
+        state: directory
+        owner: "{{ user }}"
+
+    - name: mk DNS_slave.b
+      file:
+        path: /srv/backup/DNS_slave.b
+        state: directory
+        owner: "{{ user }}"
+
+    - name: dupli-city
+      package:
+        name: duplicity
+        state: present
