@@ -1,0 +1,44 @@
+- name: get go
+  get_url:
+    url: https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
+    dest: /opt/go1.13.3.linux-amd64.tar.gz
+
+- name: unarchive
+  unarchive:
+    src: /opt/go1.13.3.linux-amd64.tar.gz
+    dest: /opt/
+    remote_src: yes
+
+- name: create user
+  user:
+    name: "{{ apache_exporter_user }}"
+    password: "{{ 'apache_exporter' | password_hash('sha512', 'A512')}}"
+    state: present
+    shell: /bin/bash
+
+- name: symboli
+  file:
+    src: /opt/go/bin/go
+    dest: /usr/local/bin/go
+    state: link
+
+- name: build essential
+  apt:
+    package: build-essential
+
+- name: apache helicopter
+  shell: "go get github.com/Lusitaniae/apache_exporter"
+
+- name: cp go
+  command: cp -r /root/go /home/{{ apache_exporter_user }}/go
+
+- name: cp service
+  template:
+    src: apache_exporter.service
+    dest: /etc/systemd/system/apache_exporter.service
+
+- name: start apache service
+  service:
+    name: apache_exporter
+    state: started
+    enabled: yes

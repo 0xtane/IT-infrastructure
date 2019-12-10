@@ -1,0 +1,34 @@
+- name: get mysql exporter
+  get_url:
+    url: https://github.com/prometheus/mysqld_exporter/releases/download/v0.12.1/mysqld_exporter-0.12.1.linux-amd64.tar.gz
+    dest: /opt/mysqld_exporter-0.12.1.linux-amd64.tar.gz
+
+
+- name: extract
+  unarchive:
+    remote_src: yes
+    src: /opt/mysqld_exporter-0.12.1.linux-amd64.tar.gz
+    dest: /opt/
+
+- name: create user
+  user:
+    name: "{{ mysql_exporter_user }}"
+    password: "{{ 'mysql_exporter' | password_hash('sha512', 'A512')}}"
+    state: present
+    shell: /bin/bash
+
+- name: copy .my.cnf with user and pass
+  template:
+    src: .my.cnf
+    dest: '{{ mycnf_dest }}.my.cnf'
+
+- name: copy exporter service
+  template:
+    src: mysqld_exporter.service
+    dest: /etc/systemd/system/mysqld_exporter.service
+
+- name: start exporter service
+  service:
+    name: mysqld_exporter
+    state: started
+    enabled: yes
