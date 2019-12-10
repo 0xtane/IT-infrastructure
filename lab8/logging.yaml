@@ -1,0 +1,24 @@
+---
+
+- name: influx
+  hosts: server2
+  become: yes
+  roles:
+  - influx
+  tags: influx
+
+
+- name: grafana
+  hosts: server2
+  become: yes
+
+  roles:
+  - grafana importer
+  tags: grafana 
+
+- name: syslog
+  hosts: server2
+  become: yes
+  roles:
+    - syslog
+  tags: syslog

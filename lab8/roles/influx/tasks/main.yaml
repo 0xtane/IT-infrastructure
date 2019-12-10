@@ -1,0 +1,27 @@
+- name: apt-get influxdb 
+  apt:
+    package: ['influxdb','influxdb-client', 'python-pip']
+
+- name: pip requests influx
+  pip:
+    name: ['requests', 'influxdb']
+
+- name: create influxdb
+  influxdb_database:
+    database_name: "zauri"
+
+- name: get telegraf
+  get_url:
+    url: https://dl.influxdata.com/telegraf/releases/telegraf_1.12.6-1_amd64.deb
+    dest: /opt/telegraf_1.12.6-1_amd64.deb
+
+- name: install tele graf 
+  apt:
+    deb: /opt/telegraf_1.12.6-1_amd64.deb
+
+- name: ucp telegraf cfg
+  template:
+    src: telegraf.conf
+    dest: /etc/telegraf/telegraf.conf
+  notify:
+    - restart telegraf
