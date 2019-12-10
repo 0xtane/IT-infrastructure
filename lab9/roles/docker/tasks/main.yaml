@@ -1,0 +1,7 @@
+- name: apt get docker 
+  apt:
+    package: [docker.io, python-pip]
+
+- name: pip docker-py
+  pip:
+    name: docker-py

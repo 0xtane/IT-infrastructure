@@ -1,0 +1,13 @@
+- name: wordpress container
+  docker_container:
+    name: wordpress
+    image: wordpress
+    state: started
+    network_mode: bridge
+    ports: 8080:80 
+    detach: true 
+    env:
+      WORDPRESS_DB_HOST: 192.168.56.6:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress

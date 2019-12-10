@@ -1,0 +1,18 @@
+- name: docker, wordpress, grafana
+  become: yes
+  hosts: server1
+  roles:
+  - docker
+  - wordpress_container
+  - grafana_container
+  
+
+- name: prometheus, mysql
+  become: yes
+  hosts: server2
+  vars:
+    version: 2.14.0
+    prometheus_user: root
+  roles:
+  - prometheus
+  - mysql
