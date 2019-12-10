@@ -1,0 +1,27 @@
+- name: get apt mysql
+  package:
+    name: mysql-server 
+    state: present
+
+- name: cp mysql cfg
+  template:
+    src: mysqld.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+
+- name: copy db file
+  template:
+    src: database.sql
+    dest: /tmp/database.sql
+
+- name: create mysql user
+  shell: mysql --defaults-file=/etc/mysql/debian.cnf < /tmp/database.sql
+
+- name: reload mysql
+  service:
+    name: mysql
+    state: restarted
+
+- name: Remove file
+  file:
+    path: /tmp/database.sql
+    state: absent

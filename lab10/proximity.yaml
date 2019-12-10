@@ -1,0 +1,50 @@
+- name: Haproxymity
+  become: yes
+  hosts: server1
+  roles:
+  - haproxy
+  tags: haproxy
+
+- name: Doxer
+  become: yes
+  hosts: server1
+  roles:
+  - doxer
+  tags: docker
+
+- name: wordpress1dox
+  become: yes
+  hosts: server1
+  vars:
+    container_name: wordpress1
+    host_port: 8080
+  roles:
+  - wordpress_container
+  tags: wordpress
+
+- name: wordpress2dox
+  become: yes
+  hosts: server1
+  vars:
+    container_name: wordpress2
+    host_port: 8081
+  roles:
+  - wordpress_container
+  tags: wordpress
+
+- name: wordpress3dox
+  become: yes
+  hosts: server1
+  vars:
+    container_name: wordpress3
+    host_port: 8082
+  roles:
+  - wordpress_container
+  tags: wordpress
+
+- name: mysql
+  become: yes
+  hosts: server2
+  roles:
+  - mysql
+  tags: mysql
