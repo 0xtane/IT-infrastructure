@@ -1,0 +1,10 @@
+1. Create github repo
+ - should be private
+ - read access for 'romankuchin' and 'hudolejev'
+2. Install ubuntu (managed node)
+3. Install ansible (management node)
+4. Create lab1/inventory
+5. Write ad-hoc commands
+ - ping
+ - show process list
+

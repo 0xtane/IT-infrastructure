@@ -1,0 +1,49 @@
+---
+- hosts: servers
+  become: yes 
+  tasks:
+  - name: pong
+    ping:
+
+  - name: place ssh keys 
+    authorized_key:
+      user: user
+      key: https://github.com/saudzi.keys 
+
+  - name: sudo without pass
+    copy:
+      dest: /etc/sudoers.d/user
+      content: "user	ALL = NOPASSWD: ALL"
+
+  - name: create group "sysadmins"
+    group:
+      name: sysadmins
+      state: present
+
+  - name: create a user for teacher and add to sysadmins
+    user:
+     name: romakuchin
+     password: "{{ 'password' | password_hash('sha512', 'A512')}}"
+     groups:
+      - sysadmins
+     state: present
+     shell: /bin/bash
+     generate_ssh_key: yes
+     ssh_key_bits: 2048
+     ssh_key_file: .ssh/id_rsa
+
+  - name: get proc 1
+    shell: 'ps -a'
+    register: out 
+
+  - name: proc show 1
+    debug: 
+      var: out.stdout_lines
+
+  - name: get proc 2
+    command: "netstat -ntlp"
+    register: abc
+
+  - name: proc show 2
+    debug:
+      var: abc.stdout_lines

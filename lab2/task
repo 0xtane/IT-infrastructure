@@ -1,0 +1,33 @@
+1. create init.yaml
+ - create ssh keys for admin (your initial user)
+ - sudo without password
+ - create users for teachers. Add them to additional group sysadmins(+ssh keys)
+ - write to console list of processes
+
+---
+
+- name: First play
+  hosts: 127.0.0.1
+  remote_user: user
+  become: yes
+  tasks:
+  - name: First task
+    ping:
+
+  - name: Show proc list
+    command: "netstat -ntlp"
+    register: abc
+
+  - name: Show output
+    debug:
+      var: abc.stdout_lines
+
+  - name: place ssh keys
+    authorized_key:
+      user: user
+      key: https://github.com/romankuchin.keys
+
+  - name: disable sudo pass
+    copy:
+      dest: /etc/sudoers.d/user
+      content: "user      ALL = NOPASSWD: ALL"
