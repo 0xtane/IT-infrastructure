@@ -3,27 +3,27 @@
   hosts: server1
   become: yes
   tasks:
-  - name: Install apache2
+  - name: installing apache
     package:
       name: apache2
       state: present
 
-  - name: Apache config 1 
+  - name: \copy wordpress config
     template:
       src: ./files/wordpress.conf
       dest: /etc/apache2/sites-enabled/wordpress.conf
 
-  - name: Apache config 2 
+  - name: copy apache cfg
     template:
       src: ./files/000-default.conf
       dest: /etc/apache2/sites-enabled/000-default.conf
 
-  - name: Install PHP
+  - name:  get php
     package:
       name: php
       state: present
 
-  - name: Install wordpress
+  - name: get wordpress
     package:
       name: wordpress
       state: present
@@ -44,22 +44,22 @@
   hosts: server2
   become: yes
   tasks:
-  - name: Install MySQL
+  - name: get mysql
     package:
       name: mysql-server
       state: present
 
-  - name: Mysql conf 
+  - name: copy mysql cfg
     template:
       src: ./files/mysqld.cnf
       dest: /etc/mysql/mysql.conf.d/mysqld.cnf
 
-  - name: Add DB file
+  - name: make db file
     template:
       src: ./files/database.sql
       dest: /tmp/database.sql
 
-  - name: Create DB & User 
+  - name: create db and user
     shell: mysql --defaults-file=/etc/mysql/debian.cnf < /tmp/database.sql
 
   - name: reload mysql
