@@ -13,7 +13,7 @@
 - name: create user
   user:
     name: "{{ mysql_exporter_user }}"
-    password: "{{ 'mysql_exporter' | password_hash('sha512', 'A512')}}"
+    password: "{{ mysql_exporter_pass }}" #hint mysql_exporter
     state: present
     shell: /bin/bash
 

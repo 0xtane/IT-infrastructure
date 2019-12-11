@@ -9,12 +9,16 @@
     dest: /opt/
     remote_src: yes
 
-- name: create user
-  user:
+
+
+- name: create user3
+  user: 
     name: "{{ apache_exporter_user }}"
-    password: "{{ 'apache_exporter' | password_hash('sha512', 'A512')}}"
+    password: "{{ apache_exporter_pass }}"
     state: present
     shell: /bin/bash
+  tags:
+    - usercreate
 
 - name: symboli
   file:

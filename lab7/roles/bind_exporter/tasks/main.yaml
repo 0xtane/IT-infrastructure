@@ -13,7 +13,8 @@
 - name: create user
   user:
     name: "{{ bind_exporter_user }}"
-    password: "{{ 'bind_exporter' | password_hash('sha512', 'A512')}}"
+    password: user
+
     state: present
     shell: /bin/bash
 
