@@ -22,6 +22,17 @@
         - restart bind
         - checkconf
 
+    - name: systemd-resolved
+      service:
+        name: systemd-resolved
+        state: stopped
+        enabled: no
+
+    - name: add resolv.conf file
+      template:
+        src: files/resolv.conf
+        dest: /etc/resolv.conf
+
     - name: hash db     # file integrity
       when: dns_role == "master"
       copy: 
