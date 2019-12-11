@@ -1,6 +1,6 @@
 ---
-- name: Lab3
-  hosts: saxeli
+- name: lab3
+  hosts: servers
   become: yes
   tasks:
   - name: Ping
@@ -10,6 +10,7 @@
     package:
       name: apache2
       state: present
+
 
   - name: installing PHP
     package:
@@ -25,6 +26,7 @@
     copy:
       src: ./files/php-8080.conf
       dest: /etc/apache2/sites-enabled/php-8080.conf
+
 
   - name: make index.php
     copy:
