@@ -1,0 +1,7 @@
+- name: grafana container
+  docker_container:
+    name: grafana
+    image: grafana/grafana
+    state: started
+    ports: 3000:3000
+    detach: true

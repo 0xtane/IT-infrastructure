@@ -1,0 +1,45 @@
+---
+  forwarders:
+    - 8.8.8.8
+    - 1.1.1.1
+    - 9.9.9.10
+  locals:
+    - 192.168.56.0/24
+    - 127.0.0.0/24
+  dns_records:
+    - name: no.sleep.
+      type: NS
+      address: server1.no.sleep.
+
+    - name: no.sleep.
+      type: NS
+      address: server2.no.sleep.
+
+    - name: server1.no.sleep.
+      type: A
+      address: 192.168.56.5
+
+    - name: server2.no.sleep.
+      type: A
+      address: 192.168.56.6
+
+    - name: influxdb.no.sleep.
+      type: A
+      address: 192.168.56.6
+
+    - name: ns1.no.sleep.
+      type: CNAME
+      address: server1.no.sleep.
+
+    - name: ns2.no.sleep.
+      type: CNAME
+      address: server2.no.sleep.
+
+  pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          36363665666334393262306234393536636565366633653730333534346636383038363535383034
+          6639336634643034343564303535656438303330393464650a653337653230306139316435303463
+          34613532323366616633663262646535393935343763386436303635353533356563363562383037
+          3836346137633437660a326566303139656637383633616431333532613433363366316335613135
+          6539
+

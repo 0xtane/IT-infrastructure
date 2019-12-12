@@ -1,0 +1,50 @@
+    - name: install bind package
+      apt:
+        package: bind9
+
+    - name: bind cfg
+      template:
+        src: files/named.conf.options
+        dest: /etc/bind/named.conf.options
+      notify: restart bind
+
+    - name: bind local cfg
+      template:
+        src: files/named.conf.local
+        dest: /etc/bind/named.conf.local
+      notify: 
+        - restart bind
+        - checkconf
+
+    - name: systemd-resolved
+      service:
+        name: systemd-resolved
+        state: stopped
+        enabled: no
+
+    - name: add resolv.conf file
+      template:
+        src: files/resolv.conf
+        dest: /etc/resolv.conf
+
+    - name: hash db     # file integrity
+      when: dns_role == "master"
+      copy: 
+        content: "{{ dns_records | hash }}"
+        dest: /etc/bind/db.sleep.hash
+      notify:
+        - register timestamp
+        - configure bind
+        - reload db
+
+    - name: hash db ptr
+      when: dns_role == "master"
+      copy:
+        content: "{{ dns_records | hash }}"
+        dest: /etc/bind/db.sleep.ptr.hash
+      notify:
+        - register timestamp
+        - configure bind pointer
+        - reload db
+
+ 

@@ -1,0 +1,11 @@
+- name: restart bind
+  service:
+    name: bind9
+    state: restarted
+
+- name: restart systemd
+  shell: "systemctl daemon-reload" 
+
+
+- name: daemon reload
+  shell: "systemctl daemon-reload"
