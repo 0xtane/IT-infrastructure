@@ -1,0 +1,31 @@
+  - name: installing Apache
+    package:
+      name: apache2
+      state: present
+
+
+  - name: installing PHP
+    package:
+      name: php
+      state: present
+
+  - name: update ports
+    template:
+      src: ports.conf
+      dest: /etc/apache2/ports.conf
+
+  - name: make php document
+    template:
+      src: php-8080.conf
+      dest: /etc/apache2/sites-enabled/php-8080.conf
+
+
+  - name: make index.php
+    template:
+      src: index.php
+      dest: /var/www/php/
+
+  - name: reload
+    service:
+      name: apache2
+      state: reloaded
