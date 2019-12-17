@@ -1,0 +1,11 @@
+- name: apt-get influxdb 
+  apt:
+    package: ['influxdb','influxdb-client', 'python-pip']
+
+- name: pip requests influx
+  pip:
+    name: ['requests', 'influxdb']
+
+- name: create influxdb
+  influxdb_database:
+    database_name: "influxdb"

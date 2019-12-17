@@ -1,0 +1,9 @@
+[Unit]
+Description=MySQL Exporter
+
+[Service]
+User={{ mysql_exporter_user }}
+ExecStart=/opt/mysqld_exporter-0.12.1.linux-amd64/mysqld_exporter
+
+[Install]
+WantedBy=multi-user.target

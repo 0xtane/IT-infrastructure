@@ -1,0 +1,9 @@
+[Unit]
+Description=Bind Exporter
+
+[Service]
+User={{ bind_exporter_user }}
+ExecStart=/home/{{ bind_exporter_user }}/go/bin/bind_exporter
+
+[Install]
+WantedBy=multi-user.target
