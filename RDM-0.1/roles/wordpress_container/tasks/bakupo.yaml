@@ -10,4 +10,3 @@
       WORDPRESS_DB_HOST: "{{mysql_server}}:{{mysql_port}}"
       WORDPRESS_DB_USER: "{{mysql_user}}"
       WORDPRESS_DB_NAME: "{{mysql_db}}"
-      WORDPRESS_DB_PASSWORD: "{{mysql_pass}}"

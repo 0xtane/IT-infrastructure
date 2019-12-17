@@ -1,9 +1,0 @@
-node_exporter_user: node_exporter
-bind_exporter_user: bind_exporter
-version: 2.14.0
-prometheus_user: root
-mysql_exporter_user: mysql_exporter
-mycnf_dest: /home/mysql_exporter/
-apache_exporter_user: apache_exporter
-exporter_pass: exporter
-

@@ -2,4 +2,4 @@
   template:
     src: 51-telegraf.conf
     dest: /etc/rsyslog.d/51-telegraf.conf
-  notify: restrt rsyslog
+  notify: restart rsyslog
