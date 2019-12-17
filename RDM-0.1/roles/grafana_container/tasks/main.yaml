@@ -1,8 +1,0 @@
-- name: grafana container
-  docker_container:
-    name: grafana
-    image: grafana/grafana
-    state: started
-    ports: "{{grafana_port}}:{{grafana_port}}"
-    detach: true
-    restart_policy: always

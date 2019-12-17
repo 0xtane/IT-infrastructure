@@ -1,9 +1,0 @@
-[Unit]
-Description=Node Exporter
-
-[Service]
-User={{ node_exporter_user }}
-ExecStart=/opt/node_exporter-0.18.1.linux-amd64/node_exporter
-
-[Install]
-WantedBy=multi-user.target

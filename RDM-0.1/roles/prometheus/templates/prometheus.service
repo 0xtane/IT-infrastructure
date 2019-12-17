@@ -1,9 +1,0 @@
-[Unit]
-Description=Prometheus
-
-[Service]
-User={{ prometheus_user }}
-ExecStart=/opt/prometheus-{{ version }}.linux-amd64/prometheus --config.file=/opt/prometheus-{{ version }}.linux-amd64/prometheus.yml
-
-[Install]
-WantedBy=multi-user.target

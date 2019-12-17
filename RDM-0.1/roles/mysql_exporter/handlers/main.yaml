@@ -1,2 +1,0 @@
-- name: restart systemd
-  shell: "systemctl daemon-reload"
