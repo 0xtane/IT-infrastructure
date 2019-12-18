@@ -7,14 +7,18 @@ $TTL	604800
 			 604800 )	; Negative Cache TTL
 ;
 
-{% for i in dns_records %}
-{{ i.name }} IN {{ i.type }} {{ i.address }}
+{% for record in dns_records %}
+{% for entry in record.entries %}
+{% if 'address' in entry %}
+{{ entry.name }} IN {{ record.type }} {{ entry.address }}
+{% elif 'addresses' in entry %}
+{% for address in entry.addresses %}
+{% if loop.index == 1 %}
+{{ entry.name }} IN {{ record.type }} {{ address }}
+{% else %}
+				      IN {{ record.type }} {{ address }}
+{% endif %}
 {% endfor %}
-
-{% for i in dns_records %}
-  {% if i.onlyone == "no" %}
-   {{ i.name }} {% for address in i %}
-                  IN {{ i.type }} {{ i.address }}
-                {% endfor %}
-  {% endif %}
-{% endfor %}  
+{% endif %}
+{% endfor %}
+{% endfor %}

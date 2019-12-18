@@ -36,6 +36,7 @@
         - register timestamp
         - configure bind
         - reload db
+        - restart bind
 
     - name: hash db ptr
       when: dns_role == "master"
@@ -46,5 +47,6 @@
         - register timestamp
         - configure bind pointer
         - reload db
+        - restart bind
 
  
