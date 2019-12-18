@@ -2,7 +2,7 @@ Coverage
 Wordpress, logs , exports and databases
 
 RPO (acceptable data loss)
-(RPO) determines the maximum acceptable amount of data loss measured in time. For example, the maximum tolerable data loss is in our case would be 0 minutes.
+(RPO) determines the maximum acceptable amount of data loss measured in time. For example, the maximum tolerable data loss is in our case would be 10 hours.
 
 Retention
 the backed up data is stored on the servers for 30 days
