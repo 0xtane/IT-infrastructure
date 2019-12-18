@@ -87,9 +87,10 @@
   roles:
   - bind_exporter
   - node_exporter
+  - apache_exporter
   tags: exporter
 
-# might add apache exporter
+#  added extra apache exporters
 
 - name: influx & telegraf install  # .
   become: yes

@@ -1,0 +1,9 @@
+[Unit]
+Description=Apache Exporter
+
+[Service]
+User={{ apache_exporter_user }}
+ExecStart=/home/apache_exporter/go/bin/apache_exporter
+
+[Install]
+WantedBy=multi-user.target
