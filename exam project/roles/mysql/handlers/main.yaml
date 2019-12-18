@@ -1,6 +1,3 @@
-- name: restart systemd
-  shell: "systemctl daemon-reload"
-
 - name: restart mysql
   service:
     name: mysql

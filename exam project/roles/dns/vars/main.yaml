@@ -1,4 +1,4 @@
-
+return2: 1 #if you want to return only 1 server edit it to non-1 value
 forwarders:
   - 8.8.8.8
   - 1.1.1.1
@@ -8,29 +8,38 @@ locals:
   - 127.0.0.0/24
 dns_records:
   - name: no.sleep.
+    onlyone: yes
     type: NS
     address: server1.no.sleep.
 
   - name: no.sleep.
+    onlyone: yes
     type: NS
     address: server2.no.sleep.
 
   - name: server1.no.sleep.
+    onlyone: yes
     type: A
     address: 192.168.56.5
 
   - name: server2.no.sleep.
+    onlyone: yes
     type: A
     address: 192.168.56.6
 
-  - name: influxdb.no.sleep.
+  - name: server.island.awsome.
+    onlyone: no
     type: A
-    address: 192.168.56.6
+    address: 
+    - 192.168.56.105
+    - 192.168.56.106
 
   - name: ns1.no.sleep.
+    onlyone: yes
     type: CNAME
     address: server1.no.sleep.
 
   - name: ns2.no.sleep.
+    onlyone: yes
     type: CNAME
     address: server2.no.sleep.

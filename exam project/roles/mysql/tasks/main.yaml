@@ -1,28 +1,33 @@
 
-  - name: get mysql
-    package:
-      name: mysql-server
-      state: present
+- name: get mysql
+  package:
+    name: mysql-server
+    state: present
 
-  - name: copy mysql cfg
-    template:
-      src: ./files/mysqld.cnf
-      dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+- name: copy mysql cfg
+  template:
+    src: ./files/mysqld.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
 
-  - name: make db file
-    template:
-      src: ./files/database.sql
-      dest: /tmp/database.sql
 
-  - name: create db and user
-    shell: mysql --defaults-file=/etc/mysql/debian.cnf < /tmp/database.sql
+- name: myql server and py3
+  package:
+    name: ['mysql-server', 'python3-pip','python-mysqldb']
+    state: present
 
-  - name: reload mysql
-    service:
-      name: mysql
-      state: restarted
+- pip:
+    name: ['PyMySQL']
 
-  - name: Remove file
-    file:
-      path: /tmp/database.sql
-      state: absent
+- name: make database
+  mysql_db:
+    name: "{{mysql_db}}"
+    state: present
+   
+- name: create db user
+  mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_pass }}"
+    priv: '*.*:ALL'
+    host: "%"
+    state: present
+  notify: restart mysql

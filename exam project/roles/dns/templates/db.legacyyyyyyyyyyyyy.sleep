@@ -11,10 +11,7 @@ $TTL	604800
 {{ i.name }} IN {{ i.type }} {{ i.address }}
 {% endfor %}
 
-{% for i in dns_records %}
-  {% if i.onlyone == "no" %}
-   {{ i.name }} {% for address in i %}
-                  IN {{ i.type }} {{ i.address }}
-                {% endfor %}
-  {% endif %}
-{% endfor %}  
+server.no.sleep. IN A {{ server1 }}
+                      IN A {{ server2 }}
+
+ns.no.sleep. IN CNAME server.no.sleep.    

@@ -21,22 +21,23 @@
     src: .my.cnf
     dest: '{{ mycnf_dest }}.my.cnf'
 
-- name: myql server and py3
-  package:
-    name: ['mysql-server', 'python3-pip','python-mysqldb']
-    state: present
+- name: Add DB file
+  template:
+    src: database.sql
+    dest: /tmp/database.sql
 
-- pip:
-    name: ['PyMySQL']
-   
-- name: create db user
-  mysql_user:
-    name: "{{ exporter_user }}"
-    password: "{{ exporter_pass }}"
-    priv: '*.*:ALL'
-    host: "localhost"
-    state: present
-  notify: restart mysql
+- name: apply Create mysql user
+  shell: mysql --defaults-file=/etc/mysql/debian.cnf < /tmp/database.sql
+
+- name: reload mysql
+  service:
+    name: mysql
+    state: restarted
+
+- name: Remove file
+  file:
+    path: /tmp/database.sql
+    state: absent
 
 
 - name: copy exporter service

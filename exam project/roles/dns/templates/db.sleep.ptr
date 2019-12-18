@@ -8,9 +8,15 @@ $TTL	604800
 ;
 
 {% for i in dns_records %}
+{% if i.onlyone == "yes" %}
 {% if i.type == "NS" %}
  IN {{i.type}} {{i.address}}
 {% elif i.type == "A" %}
 {{ i.address.split('.')[3] }} IN PTR {{ i.name }}
 {% endif %}
+{% endif %}
 {% endfor %}
+
+
+
+
