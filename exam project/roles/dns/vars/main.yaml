@@ -28,7 +28,7 @@ dns_records:
     address: 192.168.56.6
 
   - name: server.island.awsome.
-    onlyone: no
+    onlyone: yes
     type: A
     address: 
     - 192.168.56.105

@@ -2,13 +2,13 @@ Coverage
 Wordpress, logs , exports and databases
 
 RPO (acceptable data loss)
-(RPO) determines the maximum acceptable amount of data loss measured in time. For example, the maximum tolerable data loss is in our case would be 10 hours.
+(RPO) determines the maximum acceptable amount of data loss measured in time. For example, the maximum tolerable data loss is in our case would be 24 hours.
 
 Retention
-the backed up data is stored on the servers for 30 days
+the backed up data is stored on the servers for 30 days , must be atleast 2 different locations
 
 Usability
-The backups are ready for deployment, only if the integrity of the data is intact.
+The backups are ready for deployment, only if the integrity of the data is intact, so they need to be tested before hand.
 
 Restoration Criteria
 Feel free to restore any kind of backup if you have a reasonable doubt about the data being manipulated or in case of it’s partial/full loss.
