@@ -1,109 +1,106 @@
-- name: webserver
+- name: webserver   #
   become: yes
   hosts: servers
   roles:
   - webserver
   tags: web
 
-- name: dns & bind
+- name: dns & bind  #
   become: yes
   hosts: servers
   roles:
   - dns
   tags: dns
 
-- name: mysql
+- name: mysql       #
   become: yes
   hosts: server2
   roles:
   - mysql
   tags: sql
 
-- name: docker
+- name: docker      #
   become: yes
   hosts: servers
   roles:
   - docker
   tags: docker
 
-- name:  wordpress container 1
+- name:  wordpress container 1 #
   become: yes
   hosts: server1
   vars:
   - container_name: wpcon1
-  - host_port: 8080
+  - host_port: "{{wp_con1_port}}" #8080
   roles:
   - wordpress_container
-  tags: wpcon
+  tags: wp
 
-- name:  wordpress container 2
+- name:  wordpress container 2 #
   become: yes
   hosts: server1
   vars:
   - container_name: wpcon2
-  - host_port: 8081
+  - host_port: "{{wp_con2_port}}" #8081
   roles:
   - wordpress_container
-  tags: wordpress
+  tags: wp
 
-- name: fix handler issues of dns
-  become: yes
-  hosts: servers
-  roles:
-  - handy
-  tags: handy
+#- name: fix handler issues of dns
+#  become: yes
+#  hosts: servers
+#  roles:
+#  - handy
+#  tags: handy
 
-- name: grafana container
+- name: grafana container   #
   become: yes
   hosts: server2
   roles:
   - grafana_container
   tags: grafana
 
-- name: prometheus
+- name: prometheus    #
   become: yes
   hosts: server2
   roles:
   - prometheus
   tags: prometheus
 
-- name: haproxy
+- name: haproxy      #
   become: yes
   hosts: server1
   roles:
   - haproxy
   tags: haproxy
 
-- name: sql exporter
+- name: sql exporter   #
   become: yes
   hosts: server2
   roles:
   - mysql_exporter
   tags: exporter
 
-- name: bind & node exporters
+- name: bind & node exporters #
   become: yes
   hosts: servers
   roles:
   - bind_exporter
   - node_exporter
+  - apache_exporter
   tags: exporter
 
-- name: sql exporter
-  become: yes
-  hosts: server2
-  roles:
-  - mysql_exporter
-  tags: exporter
+#  added extra apache exporters
 
-- name: influx & telegraf install
+- name: influx & telegraf install  # .
   become: yes
   hosts: server2
   roles:
   - influx
-  tags: influx
+  - telegraf
+  tags: teleflux
 
-- name: syslog
+- name: syslog               #!
   become: yes
   hosts: servers
   roles:

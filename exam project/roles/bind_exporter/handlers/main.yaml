@@ -7,5 +7,5 @@
   shell: "systemctl daemon-reload" 
 
 
-- name: daemon reload
-  shell: "systemctl daemon-reload"
+
+

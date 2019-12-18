@@ -5,3 +5,6 @@
 - name: pip docker-py
   pip:
     name: docker-py
+
+- name: enable docker
+  shell: systemctl enable docker

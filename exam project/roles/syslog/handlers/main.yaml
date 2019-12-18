@@ -1,7 +1,7 @@
 - name: netplan
   shell: "netplan apply"
 
-- name: restrt rsyslog
+- name: restart rsyslog
   service:
     name: rsyslog
     state: restarted

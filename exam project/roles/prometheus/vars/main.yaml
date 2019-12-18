@@ -1,4 +1,2 @@
-prometheus_user: root
 version: 2.14.0
-server1: server1.no.sleep
-server2: server2.no.sleep
+

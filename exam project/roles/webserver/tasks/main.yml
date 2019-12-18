@@ -10,19 +10,19 @@
       state: present
 
   - name: update ports
-    copy:
-      src: ./files/ports.conf
+    template:
+      src: ports.conf
       dest: /etc/apache2/ports.conf
 
   - name: make php document
-    copy:
-      src: ./files/php-8080.conf
+    template:
+      src: php-8080.conf
       dest: /etc/apache2/sites-enabled/php-8080.conf
 
 
   - name: make index.php
-    copy:
-      src: ./files/index.php
+    template:
+      src: index.php
       dest: /var/www/php/
 
   - name: reload

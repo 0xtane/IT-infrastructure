@@ -4,13 +4,13 @@
 
     - name: bind cfg
       template:
-        src: files/named.conf.options
+        src: named.conf.options
         dest: /etc/bind/named.conf.options
       notify: restart bind
 
     - name: bind local cfg
       template:
-        src: files/named.conf.local
+        src: named.conf.local
         dest: /etc/bind/named.conf.local
       notify: 
         - restart bind
@@ -24,10 +24,10 @@
 
     - name: add resolv.conf file
       template:
-        src: files/resolv.conf
+        src: resolv.conf
         dest: /etc/resolv.conf
 
-    - name: hash db     # file integrity
+    - name: hash db     
       when: dns_role == "master"
       copy: 
         content: "{{ dns_records | hash }}"

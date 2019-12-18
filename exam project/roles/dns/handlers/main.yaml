@@ -4,12 +4,12 @@
 
 - name: configure bind
   template:
-    src: files/db.sleep
+    src: db.sleep
     dest: /etc/bind/db.sleep
     
 - name: configure bind pointer 
   template:
-    src: files/db.sleep.ptr
+    src: db.sleep.ptr
     dest: /etc/bind/db.sleep.ptr
 
 - name: restart bind

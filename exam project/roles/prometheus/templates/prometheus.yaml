@@ -30,22 +30,28 @@ scrape_configs:
 
 
   
-  - job_name: 'servers'
+  - job_name: 'nodes'
     static_configs:
      - targets:
-       - '{{ server1 }}:9100'
-       - '{{ server2 }}:9100'
+       - '{{ server1d }}:9100'
+       - '{{ server2d }}:9100'
 
 
-  - job_name: 'bind'
+  - job_name: 'binds'
     static_configs:
      - targets:
-       - '{{ server1 }}:9119'
-       - '{{ server2 }}:9119'
+       - '{{ server1d }}:9119'
+       - '{{ server2d }}:9119'
 
 
   - job_name: 'mysql'
     static_configs:
      - targets:
-       - '{{ server2 }}:9104'
+       - '{{ server2d }}:9104'
 
+
+  - job_name: 'apache helicopters'
+    static_configs:
+     - targets:
+       - '{{ server1d }}:9117'
+       - '{{ server2d }}:9117'
